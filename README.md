@@ -55,7 +55,7 @@
 ### **Prompt:** Simulate a **Garbage Collection Scenario**  
 ✅ **Requirements:**  
 - Create objects inside a loop to simulate memory allocation.  
-- Override the `finalize()` method to print a message when objects are garbage-collected.  
+- Use `Cleaner` to register the object with a message when objects are garbage-collected.  
 - Explicitly call `System.gc()` and observe the effect.  
 
 ---
