@@ -33,7 +33,7 @@ public class Main {
     }
 
     private static void connectToDB() {
-        DB db = new DB();
+        EmployeeService employeeDB = new EmployeeService();
     }
 
 

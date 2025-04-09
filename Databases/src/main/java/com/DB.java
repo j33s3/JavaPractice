@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
+import org.mariadb.jdbc.message.client.PrepareExecutePacket;
+
 import com.google.gson.*;
 
 
@@ -16,6 +18,8 @@ public class DB {
     String username;
     String password;
     String dbName;
+    
+    protected Connection connection;
 
 
 
@@ -29,31 +33,61 @@ public class DB {
         System.out.println(password);
         System.out.println(dbName);
         
-        Connection connection = null;
+        connection = null;
         Statement statement = null;
 
         try {
-            //Connect to the database withough specifying a database
+            // Connect to the database withough specifying a database
             connection = DriverManager.getConnection(dbURL, username, password);
             statement = connection.createStatement();
 
-            //Check validity of the database
+            // Check validity of the database
             String checkDatabaseQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
             ResultSet resultSet = statement.executeQuery(checkDatabaseQuery);
 
+            // Make the DB if it doesn't exist already
             if(!resultSet.next()) {
                 String createDatabaseQuery = "CREATE DATABASE " + dbName;
-                statement.executeQuery(createDatabaseQuery);
-                System.out.println("Database: " + dbName +  "Created Successfuly");
+                statement.executeUpdate(createDatabaseQuery);
+                System.out.println("Database: " + dbName +  " Created Successfuly");
             } else {
                 System.out.println("Database: " + dbName + " Already Exists");
             }
-
 
         } catch(Exception e) {
             e.printStackTrace();
         } finally {
 
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) statement.close();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            connection = DriverManager.getConnection(String.format("%s%s", dbURL, dbName), username, password);
+            statement = connection.createStatement();
+
+
+            String createTableQuery = """
+                    CREATE TABLE IF NOT EXISTS employees(
+                    id_ INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(100),
+                    email VARCHAR(100),
+                    department VARCHAR(100),
+                    salary DECIMAL(10, 2)
+                    );
+                    """;
+
+            statement.executeUpdate(createTableQuery);
+            System.out.println("Created the table successfully!");
+        } catch (SQLException e) {
+            System.err.println("Could not creat employee table");
+            e.printStackTrace();
+        } finally {
+            
             try {
                 if (statement != null) statement.close();
                 if (connection != null) statement.close();
@@ -80,8 +114,28 @@ public class DB {
             System.err.println("Error Reading the Config File");
             e.printStackTrace();
         }
+    }
 
+    public void initialize() {
+        try {
+            connection = DriverManager.getConnection(String.format("%s%s", dbURL, dbName), username, password);
+            System.out.println("Connection Established!");
+        } catch (SQLException e) {
+            System.out.println("Error Establishing Connection to Database");
+            e.printStackTrace();
+        }
+    }
 
+    public void close() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Connection Closed.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Unable to Close Connection");
+            e.printStackTrace();
+        }
     }
 
     
