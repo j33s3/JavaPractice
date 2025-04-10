@@ -1,0 +1,12 @@
+{
+    "java.configuration.runtimes": [
+      {
+        "name": "JavaSE-24",
+        "path": "/usr/lib/jvm/java-24-openjdk",
+        "default": true
+      }
+    ],
+    "java.configuration.javaVersion": "24",
+    "java.compiler.compliance": "24",
+    "java.configuration.updateBuildConfiguration": "interactive"
+  }

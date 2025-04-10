@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 
-import org.mariadb.jdbc.message.client.PrepareExecutePacket;
-
 import com.google.gson.*;
 
 
