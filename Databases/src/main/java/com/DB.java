@@ -14,10 +14,10 @@ import com.google.gson.*;
 public class DB {
 
     Path filePath = Paths.get("resources/dbUser.json");
-    String dbURL;
-    String username;
-    String password;
-    String dbName;
+    private String dbURL;
+    private String username;
+    private String password;
+    private String dbName;
     
     protected Connection connection;
 

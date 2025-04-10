@@ -34,6 +34,23 @@ public class Main {
 
     private static void connectToDB() {
         EmployeeService employeeDB = new EmployeeService();
+
+        employeeDB.addEmployee("Joyce", "Joyce@company.net", "Merch", 30000.00);
+        employeeDB.addEmployee("Brian", "Brian@company.net", "IT",  89000.00);
+        employeeDB.addEmployee("Lucy", "Lucy@company.net", "Inventory", 49500.00);
+        employeeDB.addEmployee("Cheri", "Cheri@company.net", "Senior Management", 300000.00);
+        employeeDB.addEmployee("Harold", "Harold@company.net", "Acounting", 125000.00);
+
+        employeeDB.getEmployees();
+
+        employeeDB.updateEmployee(1, "salary", "100000.00");
+
+        employeeDB.getEmployee("name",  "Joyce");
+
+        employeeDB.removeEmployee(1);
+
+        employeeDB.getEmployees();
+
     }
 
 
