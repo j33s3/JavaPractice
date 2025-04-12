@@ -1,0 +1,7 @@
+POST /tasks
+Content-Type: application/json
+
+{
+  "title": "Finish homework",
+  "description": "Math and science due Monday"
+}

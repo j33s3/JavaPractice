@@ -75,7 +75,7 @@ public class EmployeeService extends DB {
             e.printStackTrace();
         }
     }
-    //TODO update
+
     public void updateEmployee(int id_, String item, String value) {
         String query = "UPDATE employees SET " + item + " = ? WHERE id_ = ? ";
         double newSalary = -1;
@@ -114,7 +114,6 @@ public class EmployeeService extends DB {
     }
 
 
-    //TODO getter single
 
     public void getEmployee(String item, String value) {
         String query = "SELECT * FROM employees WHERE " + item + " = ?";
@@ -161,7 +160,6 @@ public class EmployeeService extends DB {
         }
     }
 
-    //TODO getter aggregate
     public void getEmployees() {
         String query = "SELECT * FROM employees";
 
