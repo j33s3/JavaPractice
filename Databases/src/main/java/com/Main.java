@@ -1,3 +1,11 @@
+/*
+ * @file            Databases/src/main/java/com/Main.java
+ * @description     
+ * @author          Jesse Peterson
+ * @createTime      2025-04-08 16:56:17
+ * @lastModified    2025-04-09 22:33:13
+*/
+
 package com;
 
 import java.io.File;
@@ -10,15 +18,17 @@ import com.google.gson.*;
 
 public class Main {
 
+    // Create a path for keeping path consistency
     private static Path filePath = Paths.get("resources/dbUser.json");
     
     public static void main (String[] args) {
         // Create file if it does not exist
         File f = filePath.toFile();
 
-
+        // If the dbUser.json doesnt exist or the file length is 0
         if (!f.exists() || f.length() == 0) {
 
+            // Create the file
             try {
                f.createNewFile();
             } 
@@ -26,15 +36,24 @@ public class Main {
                 e.printStackTrace();
             }
 
+            // Populate the dbUser.json by function call
             getDatabaseUser();
         } 
 
+        // Connect to the db and execute commands
         connectToDB();
     }
-
+    
+    /**
+     * Connects to the database and tests the CRUD functions
+     */
     private static void connectToDB() {
+
+        // Create a new instance of employeeDB
+        // It is here where the DB and table will be created if not existing already
         EmployeeService employeeDB = new EmployeeService();
 
+        // Adding 5 employees to the database
         employeeDB.addEmployee("Joyce", "Joyce@company.net", "Merch", 30000.00);
         employeeDB.addEmployee("Brian", "Brian@company.net", "IT",  89000.00);
         employeeDB.addEmployee("Lucy", "Lucy@company.net", "Inventory", 49500.00);
